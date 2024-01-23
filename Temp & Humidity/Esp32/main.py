@@ -3,11 +3,11 @@ from time import sleep
 import dht
 
 sensor = dht.DHT11(Pin(14))
-sleep(2)
+sleep(1)
 
 while True:
   try:
-    sleep(2)
+    sleep(3)
     sensor.measure()
     temp = sensor.temperature()
     hum = sensor.humidity()
