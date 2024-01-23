@@ -20,9 +20,9 @@ RED_Led = Pin(RED_Pin, Pin.OUT)
 YELLOW_Led = Pin(YELLOW_Pin, Pin.OUT)
 GREEN_Led = Pin(GREEN_Pin, Pin.OUT)
 
-
 def do_connect():
     YELLOW_Led.value(ON)
+    sleep(1)
     sta_if = network.WLAN(network.STA_IF)
     if not sta_if.isconnected():
         print('connecting to network...')
@@ -32,11 +32,17 @@ def do_connect():
             print("Attempting to connect....")
             YELLOW_Led.value(OFF)
             RED_Led.value(ON)
-            utime.sleep(1)
+            sleep(1)
     print('Connected! Network config:', sta_if.ifconfig())
     YELLOW_Led.value(OFF)
     GREEN_Led.value(ON)
+    sleep(2)
 
 # Main
 print("Connecting to your wifi...")
 do_connect()
+YELLOW_Led.value(OFF)
+GREEN_Led.value(OFF)
+RED_Led.value(OFF)
+
+
