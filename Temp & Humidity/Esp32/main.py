@@ -14,9 +14,9 @@ PASSWORD = "wifi pass"
 # MQTT Server Parameters
 MQTT_CLIENT_ID = "iot-lab"
 MQTT_BROKER    = "http://iot.scu.ac.ir:8080/"
-MQTT_USER      = ""
-MQTT_PASSWORD  = ""
-MQTT_TOPIC     = "v1/devices/Parsa/temp&humidity"
+MQTT_USER      = "Parsa"
+MQTT_PASSWORD  = "scu99ce"
+MQTT_TOPIC     = "v1/devices/me/telemetry"
 
 wlan_sta = network.WLAN(network.STA_IF)
 wlan_sta.active(True)
@@ -69,4 +69,3 @@ while True:
     client.check_msg()
   except OSError as e:
     restart_and_reconnect()
-    
