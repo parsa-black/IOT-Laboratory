@@ -1,33 +1,42 @@
 from machine import Pin
 from time import sleep
+import network
 
-led_pin_number = [23, 22, 21]
-led_pins = []
+led_pins = [23, 22, 21]
+
+RED_Pin = 23
+YELLOW_Pin = 22
+GREEN_Pin = 21
 
 OFF = 0
 ON = 1
 
+# Replace the following with your WIFI Credentials
+SSID = "<PLACE_YOUR_SSID_HERE>"
+SSID_PASSWORD = "<PLACE_YOUR_WIFI_PASWORD_HERE>"
+
 # Stratup
-def setup_pins():
-    for pin in led_pin_number:
-        led_pins.append(Pin(pin, Pin.OUT))
+RED_Led = Pin(RED_Pin, Pin.OUT)
+YELLOW_Led = Pin(YELLOW_Pin, Pin.OUT)
+GREEN_Led = Pin(GREEN_Pin, Pin.OUT)
 
-def turn_off():
-    for pin in led_pins:
-        pin.value(OFF)
 
-def turn_on():
-    for pin in led_pins:
-        pin.value(ON)
+def do_connect():
+    YELLOW_Led.value(ON)
+    sta_if = network.WLAN(network.STA_IF)
+    if not sta_if.isconnected():
+        print('connecting to network...')
+        sta_if.active(True)
+        sta_if.connect(SSID, SSID_PASSWORD)
+        while not sta_if.isconnected():
+            print("Attempting to connect....")
+            YELLOW_Led.value(OFF)
+            RED_Led.value(ON)
+            utime.sleep(1)
+    print('Connected! Network config:', sta_if.ifconfig())
+    YELLOW_Led.value(OFF)
+    GREEN_Led.value(ON)
 
 # Main
-sleep(2.5)
-setup_pins()
-turn_on()
-sleep(0.5)
-turn_off()
-sleep(0.5)
-turn_on()
-sleep(0.5)
-turn_off()
-print('boot done')
+print("Connecting to your wifi...")
+do_connect()
