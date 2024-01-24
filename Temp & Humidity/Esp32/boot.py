@@ -2,8 +2,6 @@ from machine import Pin
 from time import sleep
 import network
 
-led_pins = [23, 22, 21]
-
 RED_Pin = 23
 YELLOW_Pin = 22
 GREEN_Pin = 21
