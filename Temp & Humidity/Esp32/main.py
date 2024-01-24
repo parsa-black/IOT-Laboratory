@@ -2,21 +2,21 @@ from umqtt import MQTTClient
 from machine import Pin, reset, Timer
 from time import sleep
 import network
-import ujson
 import dht
-import random
+
 
 
 # wifi conenction credentials
-SSID = "wifi ssid"
-PASSWORD = "wifi pass"
+SSID = "PARSA"
+PASSWORD = "44527481"
 
 # MQTT Server Parameters
-MQTT_CLIENT_ID = "iot-lab"
-MQTT_BROKER    = "http://iot.scu.ac.ir:8080/"
-MQTT_USER      = "Parsa"
-MQTT_PASSWORD  = "scu99ce"
-MQTT_TOPIC     = "v1/devices/me/telemetry"
+# ThingsBoard MQTT settings
+THINGSBOARD_SERVER = "iot.scu.ac.ir"
+ACCESS_TOKEN = "YrdzdUzEkaHhORX0P0UU"
+TOPIC = "v1/devices/me/telemetry"
+
+
 
 wlan_sta = network.WLAN(network.STA_IF)
 wlan_sta.active(True)
@@ -36,13 +36,13 @@ timer = Timer(0)
 def sub_callback(topic, msg):
   print((topic, msg))
   
-    
+# Connect to ThingsBoard MQTT  
 def connect_and_subscribe():
-  client = MQTTClient(MQTT_CLIENT_ID, MQTT_BROKER,user=MQTT_USER,password=MQTT_PASSWORD)
+  client = MQTTClient("esp32", THINGSBOARD_SERVER, user=ACCESS_TOKEN, password="")
   client.set_callback(sub_callback)
   client.connect()
-  client.subscribe(MQTT_TOPIC)
-  print('Connected to %s MQTT broker, subscribed to %s topic' % (MQTT_BROKER, MQTT_TOPIC))
+  client.subscribe(TOPIC)
+  print('Connected to %s MQTT broker, subscribed to %s topic' % (THINGSBOARD_SERVER, TOPIC))
   return client
 
 def restart_and_reconnect():
