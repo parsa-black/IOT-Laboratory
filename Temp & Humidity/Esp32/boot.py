@@ -10,8 +10,8 @@ OFF = 0
 ON = 1
 
 # Replace the following with your WIFI Credentials
-SSID = "<PLACE_YOUR_SSID_HERE>"
-SSID_PASSWORD = "<PLACE_YOUR_WIFI_PASWORD_HERE>"
+SSID = "PARSA"
+SSID_PASSWORD = "44527481"
 
 # Stratup
 RED_Led = Pin(RED_Pin, Pin.OUT)
@@ -31,6 +31,7 @@ def do_connect():
             YELLOW_Led.value(OFF)
             RED_Led.value(ON)
             sleep(1)
+            RED_Led.value(OFF)
     print('Connected! Network config:', sta_if.ifconfig())
     YELLOW_Led.value(OFF)
     GREEN_Led.value(ON)
