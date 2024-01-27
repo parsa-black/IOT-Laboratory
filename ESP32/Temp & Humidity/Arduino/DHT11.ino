@@ -1,6 +1,7 @@
-#include <Wifi.h>
-# include "DHT.h"
-#include <ThingsBoard.h>
+#include <WiFi.h>
+#include "DHT.h"
+#include "ThingsBoard.h"
+#include <ArduinoJson.h>
 
 // define DHT
 #define DHTPIN 14
@@ -12,83 +13,115 @@
 
 DHT dht(DHTPIN, DHTTYPE);
 
-// Helper macro to calculate array size
-#define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
-
 // WiFi access point
-#define  WIFI_SSID[] = "YOUR_WIFI_SSID";
+const char* WIFI_SSID = "PARSA";
 // WiFi password
-#define WIFI_PASSWORD[] = "YOUR_WIFI_PASSWORD";
+const char* WIFI_PASSWORD = "44527481";
 
 // to understand how to obtain an access token
-#define TOKEN[] = "YOUR_ACCESS_TOKEN";
+const char* TOKEN = "YrdzdUzEkaHhORX0P0UU";
 
-// Thingsboard we want to establish a connection too
-#define THINGSBOARD_SERVER[] = "THINGSBOARD_DASHBOARD_DOMAIN";
-
-// Baud rate for the debugging serial connection.
-#define SERIAL_DEBUG_BAUD = 115200U;
+// Thingsboard we want to establish a connection to
+const char* THINGSBOARD_SERVER = "iot.scu.ac.ir";
 
 // Initialize ThingsBoard client
 WiFiClient wifiClient;
 // Initialize ThingsBoard instance
 ThingsBoard tb(wifiClient);
-
+// the Wifi radio's status
+int status = WL_IDLE_STATUS;
+unsigned long lastSend;
 
 void setup() {
-  Serial.begin(SERIAL_DEBUG_BAUD);
-
-  // Pinconfig
-  pinMode(Red, OUTPUT);
-  pinMode(Yellow, OUTPUT);
-  pinMode(Green, OUTPUT);
-
-  // Connect to Wi-Fi
-  digitalWrite(Red, HIGH);
-  WiFi.begin(ssid, password);
+  Serial.begin(115200);
+  // Wifi
+  Serial.println("Connecting to AP ...");
+  // attempt to connect to WiFi network
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) {
-    digitalWrite(Yellow, HIGH);
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
+    delay(500);
+    Serial.print(".");
   }
-  digitalWrite(Red, LOW);
-  digitalWrite(Yellow, LOW);
-  digitalWrite(Green, HIGH);
-  Serial.println("Connected to WiFi");
-
-  // Connect to ThingsBoard
-  tb.begin(thingsboardServer, deviceToken);
+  Serial.println("Connected to AP");
 
   // Initialize DHT sensor
   dht.begin();
-
+  lastSend = 0;
 }
 
 void loop() {
-  float h = dht.readHumidity();
-  //Read the moisture content in %.
-  float t = dht.readTemperature();
-  //Read the temperature in degrees Celsius
+  if (WiFi.status() != WL_CONNECTED) {
+    reconnect();
+  }
 
-  if (isnan(h) || isnan(t)) {
-    Serial.println("Failed reception");
+
+  if (!tb.connected()) {
+    // Connect to the ThingsBoard
+    Serial.print("Connecting to: ");
+    Serial.print(THINGSBOARD_SERVER);
+    Serial.print(" with token ");
+    Serial.println(TOKEN);
+    if (!tb.connect(THINGSBOARD_SERVER, TOKEN)) {
+      Serial.println("Failed to connect");
+      return;
+    }
+  }
+
+  if ( millis() - lastSend > 1000 ) { // Update and send only after 1 seconds
+    getAndSendTemperatureAndHumidityData();
+    lastSend = millis();
+  }
+
+  tb.loop();
+}
+
+void getAndSendTemperatureAndHumidityData()
+{
+  Serial.println("Collecting temperature data.");
+
+  // Reading temperature or humidity takes about 250 milliseconds!
+  float humidity = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float temperature = dht.readTemperature();
+
+  // Check if any reads failed and exit early (to try again).
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Failed to read from DHT sensor!");
     return;
-    //Returns an error if the ESP32 does not receive any measurements
-  }
-  else {
-      // Print sensor values to Serial Monitor
-    Serial.print("Temperature: ");
-    Serial.print(temperature);
-    Serial.print(" °C, Humidity: ");
-    Serial.print(humidity);
-    Serial.println(" %\n");
-
-    // Upload data to ThingsBoard
-    tb.sendTelemetryFloat("temperature", temperature);
-    tb.sendTelemetryFloat("humidity", humidity);
-
   }
 
-  delay(5000); // Upload data every 5 seconds
+  Serial.println("Sending data to ThingsBoard:");
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.print(" %\t");
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.println(" *C ");
 
+  tb.sendTelemetryFloat("temperature", temperature);
+  tb.sendTelemetryFloat("humidity", humidity);
+}
+
+void reconnect() {
+  // Loop until we're reconnected
+  while (!tb.connected()) {
+    status = WiFi.status();
+    if ( status != WL_CONNECTED) {
+      WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+      while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+      }
+      Serial.println("Connected to AP");
+    }
+    Serial.print("Connecting to ThingsBoard node ...");
+    if ( tb.connect(THINGSBOARD_SERVER, TOKEN) ) {
+      Serial.println( "[DONE]" );
+    } else {
+      Serial.print( "[FAILED]" );
+      Serial.println( " : retrying in 5 seconds]" );
+      // Wait 5 seconds before retrying
+      delay( 5000 );
+    }
+  }
 }
