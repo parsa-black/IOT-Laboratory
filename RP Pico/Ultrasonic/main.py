@@ -18,9 +18,10 @@ def ultrasonic():
     timepassed = signalon - signalloff
     distance_cm = (timepassed * 0.0343) / 2
     distance_cm = round(distance_cm,2)
-    print(f"Distance: {distance_cm}")
+    return distance_cm
 
 while True:
-    ultrasonic()
-    utime.sleep(1)
+    D = ultrasonic()
+    print(D)
+    utime.sleep(3)
     
