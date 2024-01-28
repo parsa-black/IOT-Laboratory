@@ -1,7 +1,7 @@
 from machine import Pin, ADC
 from time import sleep
 
-analog_pin = ADC(28)
+analog_pin = ADC(26)
 led = Pin("LED", Pin.OUT)
 
 while True:
