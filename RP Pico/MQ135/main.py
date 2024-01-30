@@ -10,8 +10,8 @@ LED = Pin("LED", Pin.OUT)
 GREEN_Led = Pin(16, Pin.OUT)
 
 # WiFi
-SSID = "PARSA"
-SSID_PASSWORD = "44527481"
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
 
 # Connect To WiFi
 def do_connect():
@@ -35,11 +35,12 @@ GREEN_Led.value(0)
 
 
 # Global variables and constants:
-username="Parsa"
-broker=  "iot.scu.ac.ir"
+# MQTT Basic
+username="DEVICE_USERNAME"
+broker=  "HOST_NAME"
 topic = "v1/devices/me/telemetry"
-Mqtt_CLIENT_ID = "PicoAir"
-PASSWORD="scu99ce"
+Mqtt_CLIENT_ID = "CLIENT_ID"
+PASSWORD="PASSWORD"
 # MQTT
 client = MQTTClient(client_id=Mqtt_CLIENT_ID, server=broker, port=1883,
                     user=username, password=PASSWORD, keepalive=10000) #Confiuracion del Cliente MQTT
