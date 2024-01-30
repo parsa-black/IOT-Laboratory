@@ -9,8 +9,8 @@ OFF = 0
 ON = 1
 
 # WiFi
-SSID = "PARSA"
-SSID_PASSWORD = "44527481"
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
 
 # Stratup
 Led = Pin(LED_Pin, Pin.OUT)

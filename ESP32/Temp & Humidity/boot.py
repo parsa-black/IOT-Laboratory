@@ -10,9 +10,9 @@ GREEN_Pin = 21
 OFF = 0
 ON = 1
 
-# Replace the following with your WIFI Credentials
-SSID = "PARSA"
-SSID_PASSWORD = "44527481"
+# WiFi
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
 
 # Stratup
 RED_Led = Pin(RED_Pin, Pin.OUT)

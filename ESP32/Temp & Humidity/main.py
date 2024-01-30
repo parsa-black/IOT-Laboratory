@@ -11,11 +11,12 @@ sensor = dht.DHT11(Pin(14))
 led = Pin(02, Pin.OUT)
 
 # Global variables and constants:
-username="Parsa"
-broker=  "iot.scu.ac.ir"
+# MQTT Basic
+username="DEVICE_USERNAME"
+broker=  "HOST_NAME"
 topic = "v1/devices/me/telemetry"
-Mqtt_CLIENT_ID = "ESP-WROOM-32"
-PASSWORD="scu99ce"
+Mqtt_CLIENT_ID = "CLIENT_ID"
+PASSWORD="PASSWORD"
 # MQTT
 client = MQTTClient(client_id=Mqtt_CLIENT_ID, server=broker, port=1883,
                     user=username, password=PASSWORD, keepalive=10000) #Confiuracion del Cliente MQTT
