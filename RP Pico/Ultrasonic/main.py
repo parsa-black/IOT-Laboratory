@@ -6,8 +6,8 @@ import network
 import json
 
 # Objects
-TRIGGER = Pin(3, Pin.OUT)
-ECHO = Pin(2, Pin.IN)
+TRIGGER = Pin(2, Pin.OUT)
+ECHO = Pin(3, Pin.IN)
 LED = Pin("LED", Pin.OUT)
 GREEN_Led = Pin(18, Pin.OUT)
 
