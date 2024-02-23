@@ -9,7 +9,7 @@ import json
 TRIGGER = Pin(2, Pin.OUT)
 ECHO = Pin(3, Pin.IN)
 LED = Pin("LED", Pin.OUT)
-GREEN_Led = Pin(18, Pin.OUT)
+GREEN_Led = Pin(15, Pin.OUT)
 
 # WiFi
 SSID = "SSID_NAME"
