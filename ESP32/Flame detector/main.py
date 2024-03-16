@@ -1,40 +1,58 @@
-from machine import Pin, PWM
-import utime
+from machine import Pin, ADC
+from time import sleep
+import network
 
 # Objects:
-Flame_Pin = 35
+Flame_Pin = 34
+Buzzer_Pin = 33
+LED_Pin = 2
 Red_Led = 32
-utime.sleep(0.5)
-
+# Value:
 OFF = 0
 ON = 1
 
 # Stratup
 Red = Pin(Red_Led, Pin.OUT)
-Flame = Pin(Flame_Pin, Pin.IN)
+Buzzer = Pin(Buzzer_Pin, Pin.OUT)
+Flame = ADC(Pin(Flame_Pin))
+Flame.atten(ADC.ATTN_11DB)
 
-#OUT1  and OUT2
-In1=Pin(1,Pin.OUT)  #IN1
-In2=Pin(0,Pin.OUT)  #IN2
-EN_A=PWM(Pin(2))
- 
-# Defining frequency for enable pins
-EN_A.freq(1500)
- 
-duty_cycle = 65535
+# WiFi
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
+
+# Connection Stratup
+Led = Pin(LED_Pin, Pin.OUT)
+
+def do_connect():
+    Led.value(OFF)
+    sleep(0.5)
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    if not wlan.isconnected():
+        print('connecting to network...')
+        wlan.connect(SSID, SSID_PASSWORD)
+        while not wlan.isconnected():
+            print("Attempting to connect....")
+            sleep(0.5)
+    print('Connected! Network config:', sta_if.ifconfig())
+    Led.value(ON)
+    sleep(0.5)
 
 # Main
+print("Connecting to your wifi...")
+do_connect()
+Led.value(OFF) 
 while True:
-    while flame_sensor.value() == 1:
-        print("Flame Detected")
-        In1.low()
-        In2.high()
-        EN_A.duty_u16(int(duty_cycle/2))
-    
-    if flame_sensor.value() == 0:
-        In1.low()
-        In2.low()
-        print("No Flame")
- 
-utime.sleep(0.2)
+    fv = Flame.read()  # flame_value
+    print(fv)
+    sleep(2)
+    if (fv < 2800):
+        print("Fire")
+        Red.value(ON)
+        Buzzer.value(ON)
+    else:
+        print("No-Fire")
+        Red.value(OFF)
+        Buzzer.value(OFF)
     
