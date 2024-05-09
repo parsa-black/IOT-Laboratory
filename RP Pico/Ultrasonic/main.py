@@ -9,11 +9,11 @@ import json
 TRIGGER = Pin(2, Pin.OUT)
 ECHO = Pin(3, Pin.IN)
 LED = Pin("LED", Pin.OUT)
-GREEN_Led = Pin(18, Pin.OUT)
+GREEN_Led = Pin(15, Pin.OUT)
 
 # WiFi
-SSID = "PARSA"
-SSID_PASSWORD = "44527481"
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
 
 # Connect To WiFi
 def do_connect():
@@ -37,11 +37,16 @@ GREEN_Led.value(0)
 
 # Global variables and constants:
 # MQTT Basic
+<<<<<<< HEAD
 username="Parsa"
 broker=  "iot.scu.ac.ir"
+=======
+username="DEVICE_USERNAME"
+broker=  "HOST_NAME"
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
 topic = "v1/devices/me/telemetry"
-Mqtt_CLIENT_ID = "PicoSonic"
-PASSWORD="scu99ce"
+Mqtt_CLIENT_ID = "CLIENT_ID"
+PASSWORD="PASSWORD"
 # MQTT
 client = MQTTClient(client_id=Mqtt_CLIENT_ID, server=broker, port=1883,
                     user=username, password=PASSWORD, keepalive=10000) #Confiuracion del Cliente MQTT

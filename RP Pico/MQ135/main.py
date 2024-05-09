@@ -13,8 +13,8 @@ GREEN_Led = Pin(16, Pin.OUT)
 RED_Led = Pin(14, Pin.OUT)
 
 # WiFi
-SSID = "PARSA"
-SSID_PASSWORD = "44527481"
+SSID = "SSID_NAME"
+SSID_PASSWORD = "WIFI_PASSWORD"
 
 # Connect To WiFi
 def do_connect():
@@ -29,7 +29,11 @@ def do_connect():
             sleep(1)
     print('Connected! Network config:', sta_if.ifconfig())
     GREEN_Led.value(1)
+<<<<<<< HEAD
     buzzer.duty_u16(1000)
+=======
+     buzzer.duty_u16(1000)
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
     sleep(1)
     buzzer.duty_u16(0)
 
@@ -40,11 +44,12 @@ GREEN_Led.value(0)
 
 
 # Global variables and constants:
-username="Parsa"
-broker=  "iot.scu.ac.ir"
+# MQTT Basic
+username="DEVICE_USERNAME"
+broker=  "HOST_NAME"
 topic = "v1/devices/me/telemetry"
-Mqtt_CLIENT_ID = "PicoAir"
-PASSWORD="scu99ce"
+Mqtt_CLIENT_ID = "CLIENT_ID"
+PASSWORD="PASSWORD"
 # MQTT
 client = MQTTClient(client_id=Mqtt_CLIENT_ID, server=broker, port=1883,
                     user=username, password=PASSWORD, keepalive=10000) #Confiuracion del Cliente MQTT
@@ -60,8 +65,13 @@ while True:
         LED.off()
         # Value
         sensor = Analog.read_u16() / 100
+<<<<<<< HEAD
 
           #  Data         
+=======
+        
+        #  Data         
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
         print("Sensor :", sensor)
         data["AirQuality"] = sensor
          # Buzzer
@@ -72,7 +82,11 @@ while True:
             buzzer.duty_u16(0)
         else:
              RED_Led.value(0)
+<<<<<<< HEAD
          # Json    
+=======
+         # JsonS    
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
         data2 = json.dumps(data)
         
         # Send Data

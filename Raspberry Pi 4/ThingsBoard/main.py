@@ -6,8 +6,8 @@ import board
    
 from tb_gateway_mqtt import TBDeviceMqttClient
    
-ACCESS_TOKEN = "MxfcNZ7MZRQ7cP1J1LxP"
-THINGSBOARD_SERVER = 'iot.scu.ac.ir'
+ACCESS_TOKEN = "TOKEN"
+THINGSBOARD_SERVER = 'HOST'
 THINGSBOARD_PORT = 1883
 
 logging.basicConfig(level=logging.DEBUG)
