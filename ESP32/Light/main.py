@@ -31,16 +31,19 @@ LED1.value(0)
 while True:
     if time.ticks_ms() - last_update >= UPDATE_TIME_INTERVAL:
         val = LDR.read() * 0.008
-        if val < 20 :
+        if val > 20 :
             LED1.value(1)
+            light = 1
         else:
            LED1.value(0)
+           light = 0
            
         data["Value"] = val
+        data["Light"] = light
         dataJson = json.dumps(data)
            
         print('connection finished')
-        print(val)
+        print(val, light)
         client.publish(topic, dataJson)
         print("Data_Published")
         

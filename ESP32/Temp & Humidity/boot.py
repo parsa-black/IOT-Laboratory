@@ -11,7 +11,7 @@ OFF = 0
 ON = 1
 
 # Replace the following with your WIFI Credentials
-SSID = "PARSA"
+SSID = "black"
 SSID_PASSWORD = "44527481"
 
 # Stratup

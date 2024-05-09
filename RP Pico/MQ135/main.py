@@ -1,4 +1,4 @@
-from machine import Pin, ADC
+from machine import Pin, ADC, PWM
 from time import sleep, ticks_ms
 from umqtt.simple import MQTTClient
 import network
@@ -6,8 +6,11 @@ import json
 
 # Objects
 Analog = ADC(26)
+buzzer = PWM(Pin(15))
+buzzer.freq(500)
 LED = Pin("LED", Pin.OUT)
 GREEN_Led = Pin(16, Pin.OUT)
+RED_Led = Pin(14, Pin.OUT)
 
 # WiFi
 SSID = "PARSA"
@@ -26,7 +29,9 @@ def do_connect():
             sleep(1)
     print('Connected! Network config:', sta_if.ifconfig())
     GREEN_Led.value(1)
-    sleep(2)
+    buzzer.duty_u16(1000)
+    sleep(1)
+    buzzer.duty_u16(0)
 
 # Check Connection
 print("Connecting to your wifi...")
@@ -53,11 +58,24 @@ data = dict()
 while True:
     if ticks_ms() - last_update >= UPDATE_TIME_INTERVAL:
         LED.off()
-        sensor = Analog.read_u16()
+        # Value
+        sensor = Analog.read_u16() / 100
+
+          #  Data         
         print("Sensor :", sensor)
         data["AirQuality"] = sensor
+         # Buzzer
+        if sensor > 460 :
+            RED_Led.value(1)
+            buzzer.duty_u16(1000)
+            sleep(1.5)
+            buzzer.duty_u16(0)
+        else:
+             RED_Led.value(0)
+         # Json    
         data2 = json.dumps(data)
         
+        # Send Data
         print('connection finished')
         LED.on()
         client.publish(topic, data2)
