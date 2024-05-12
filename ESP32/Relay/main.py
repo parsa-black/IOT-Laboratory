@@ -2,7 +2,7 @@ from machine import Pin
 import time
 
 # Define the pin
-relay_pin = Pin(5, Pin.OUT)
+relay_pin = Pin(12, Pin.OUT)
 
 # relay ON
 def relay_on():
