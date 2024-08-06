@@ -37,8 +37,13 @@ GREEN_Led.value(0)
 
 # Global variables and constants:
 # MQTT Basic
+<<<<<<< HEAD
+username="Parsa"
+broker=  "iot.scu.ac.ir"
+=======
 username="DEVICE_USERNAME"
 broker=  "HOST_NAME"
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
 topic = "v1/devices/me/telemetry"
 Mqtt_CLIENT_ID = "CLIENT_ID"
 PASSWORD="PASSWORD"

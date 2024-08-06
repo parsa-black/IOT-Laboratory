@@ -1,4 +1,10 @@
 from machine import Pin
+<<<<<<< HEAD
+import utime
+# Objects
+led = Pin(28, Pin.OUT)
+pir = Pin(16, Pin.IN, Pin.PULL_UP)
+=======
 from umqtt.simple import MQTTClient
 import utime
 import network
@@ -51,10 +57,17 @@ last_update = ticks_ms()
 data = dict()
 #***************************************#
 
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
 # Code
 led.low()
 utime.sleep(3)
 while True:
+<<<<<<< HEAD
+   print(pir.value())
+   if pir.value() == 1:
+       print("Movement")
+       led.high()
+=======
     sensor = pir.value()
    print(pir.value())
     data["Motion"] = sensor
@@ -62,10 +75,14 @@ while True:
         print("Motion Sensor")
        led.high()
        JsonData = json.dump(data)
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
        utime.sleep(5)
    else:
        print("Waiting for movement")
        led.low()
+<<<<<<< HEAD
+=======
        JsonData = json.dump(data)
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
        utime.sleep(1)
 utime.sleep(0.2)

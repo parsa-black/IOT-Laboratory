@@ -29,7 +29,11 @@ def do_connect():
             sleep(1)
     print('Connected! Network config:', sta_if.ifconfig())
     GREEN_Led.value(1)
+<<<<<<< HEAD
+    buzzer.duty_u16(1000)
+=======
      buzzer.duty_u16(1000)
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
     sleep(1)
     buzzer.duty_u16(0)
 
@@ -61,8 +65,13 @@ while True:
         LED.off()
         # Value
         sensor = Analog.read_u16() / 100
+<<<<<<< HEAD
+
+          #  Data         
+=======
         
         #  Data         
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
         print("Sensor :", sensor)
         data["AirQuality"] = sensor
          # Buzzer
@@ -73,9 +82,14 @@ while True:
             buzzer.duty_u16(0)
         else:
              RED_Led.value(0)
+<<<<<<< HEAD
+         # Json    
+=======
          # JsonS    
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
         data2 = json.dumps(data)
         
+        # Send Data
         print('connection finished')
         LED.on()
         client.publish(topic, data2)

@@ -1,5 +1,13 @@
 from machine import Pin, I2C
 from ssd1306 import SSD1306_I2C
+<<<<<<< HEAD
+
+i2c=I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
+oled = SSD1306_I2C(128, 64, i2c)
+
+oled.text("Tom's Hardware", 0, 0)
+oled.show()
+=======
 from time import sleep
 import framebuf
 
@@ -33,3 +41,4 @@ fb = framebuf.FrameBuffer(Logo,64,48, framebuf.MONO_HLSB)
 oled.fill(0)
 oled.blit(fb, 0, 0)
 oled.show()
+>>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
