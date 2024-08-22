@@ -1,17 +1,8 @@
-#include <SPI.h>
 #include <DHT.h>
-#include <LoRa.h>
 
 //define the pins used by the DHT11 sensor
 #define DHTPIN 13
 #define DHTTYPE DHT11  
-
-//define the pins used by the transceiver module
-#define ss 5
-#define rst 14
-#define dio0 2
-
-int counter = 0;
 
 //initialize DHT11 sensor
 DHT dht(DHTPIN, DHTTYPE);
