@@ -10,15 +10,9 @@ GREEN_Pin = 21
 OFF = 0
 ON = 1
 
-<<<<<<< HEAD
-# Replace the following with your WIFI Credentials
-SSID = "black"
-SSID_PASSWORD = "44527481"
-=======
 # WiFi
 SSID = "SSID_NAME"
 SSID_PASSWORD = "WIFI_PASSWORD"
->>>>>>> bd5fd4d822c25a81b9822e6bd28a23bc4f0e140d
 
 # Stratup
 RED_Led = Pin(RED_Pin, Pin.OUT)
