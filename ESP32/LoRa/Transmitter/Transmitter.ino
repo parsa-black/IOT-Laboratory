@@ -11,6 +11,7 @@
 #define rst 14
 #define dio0 2
 
+// Count Packet
 int counter = 0;
 
 //initialize DHT11 sensor

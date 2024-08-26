@@ -3,6 +3,8 @@
 #include <LoRa.h>
 #include <Adafruit_SSD1306.h>
 #include <Adafruit_GFX.h>
+
+// Init I2C OLED
 Adafruit_SSD1306 display(128, 64);
 
 // DHT11 Data
