@@ -1,1 +1,2 @@
-# Send Soil Moisture Sensor v2.0 With BLE **Raspberry Pico W**
+# Raspberry Pico W BLE MicroPython
+Send **Capacive Soil Moisture Sensor v2.0** With `Bluetooth Low Energy` aka **BLE**
