@@ -1,0 +1,1 @@
+# Send Soil Moisture Sensor v2.0 Wia BLE with Raspberry Pico W
