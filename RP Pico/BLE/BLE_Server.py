@@ -4,8 +4,8 @@ import time
 from machine import Pin, ADC
 
 # Define UUIDs for the service and characteristics
-SERVICE_UUID = bluetooth.UUID(0x181A)  # Environmental Sensing Service
-MOIST_CHAR_UUID = bluetooth.UUID(0x2A6F)  # Soil Moisture Characteristic
+SERVICE_UUID = bluetooth.UUID("7d2746a0-c3cc-46cd-9e13-e3df31050ce7")  # Environmental Sensing Service
+MOIST_CHAR_UUID = bluetooth.UUID("01f602d7-096d-4d34-a572-e82ab2ba9290")  # Soil Moisture Characteristic
 
 # Create the service and characteristics
 service = (
@@ -69,23 +69,25 @@ def update_readings():
     # Read the sensor values
     moisture = (max_moisture - soil.read_u16()) * 100 / (max_moisture - min_moisture)  # Soil Moisture calculation
     
-    print("Moisture: " + "%.2f" % moisture + "% (ADC: " + str(soil.read_u16()) + ")")
+    print(f"Moisture: {moisture:.2f}% (ADC: {soil.read_u16()})")
     
     # Pack the data into bytes
     moist_data = struct.pack('<H', int(moisture * 100))  # Packing as an unsigned short (16-bit)
-    print("Packed data:", moist_data)
+    print(f"Packed data: {moist_data}")
     
     # Write the values to the characteristic
     try:
         ble.gatts_write(moist_handle, moist_data)
+        print("Successfully wrote to characteristic")
     except Exception as e:
-        print("Error writing to characteristic:", e)
+        print(f"Error writing to characteristic: {e}")
     
     # Notify connected clients
     try:
         ble.gatts_notify(0, moist_handle)
+        print("Notification sent successfully")
     except Exception as e:
-        print("Error notifying clients:", e)
+        print(f"Error notifying clients: {e}")
 
 # Start advertising the BLE service
 advertise()
