@@ -1,4 +1,5 @@
 from machine import Pin
+from time import sleep
 import dht
 
 # Objects:
@@ -11,5 +12,7 @@ while True:
         t = sensor.temperature()
         h = sensor.humidity()
         print(t, h)
+        sleep(2)
     except OSError as e:
         print('Failed to read DHT11 sensor.')
+
