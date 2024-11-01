@@ -1,5 +1,6 @@
 from LCD.lcdInit import tft,wr
 from LCD.ST7735 import TFT
+from LCD.ShowBmp import showBmp
 from LCD.iransans12 import font12
 from umqtt.simple import MQTTClient
 from machine import Pin, PWM
@@ -8,24 +9,24 @@ import network
 import json
 
 # Wi-Fi and ThingsBoard configuration
-WIFI_SSID = 'BLVCK'
-WIFI_PASSWORD = 'IOT'
+WIFI_SSID = ''
+WIFI_PASSWORD = ''
 THINGSBOARD_HOST = 'iot.scu.ac.ir'
-ACCESS_TOKEN = 'IOT'
+ACCESS_TOKEN = ''
 
 # Servo Setup
 MID = 1500000
 MIN = 1000000
 MAX = 2000000
 # GPIO setup
-pwm = PWM(Pin(32))
+pwm = PWM(Pin(18))
 pwm.freq(50)
 pwm.duty_ns(MID)
 
 
 # GPIO setup
-gpio_state = {2: False}  # Track GPIO state for pin 2
-gpio_pin = 2
+gpio_state = {23: False}  # Track GPIO state for pin 2
+gpio_pin = 23
 gpio_control = Pin(gpio_pin, Pin.OUT)
 gpio_control.value(0)  # Set GPIO to LOW initially
 
@@ -93,6 +94,8 @@ def main():
     connect_mqtt()
     try:
         while True:
+            wr.text((25,64),"Servo Motor",TFT.CYAN,font12)  # Show Desplay
+            wr.text((25,84),"GPIO Control",TFT.CYAN,font12)  # Show Desplay
             pwm.duty_ns(MIN)
             utime.sleep(1)
             pwm.duty_ns(MID)
