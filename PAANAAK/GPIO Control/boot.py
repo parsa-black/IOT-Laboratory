@@ -1,8 +1,10 @@
-import time
-import utime
-import network
+from LCD.lcdInit import tft,wr
+from LCD.ST7735 import TFT
+from LCD.iransans12 import font12
 from umqtt.simple import MQTTClient
 from machine import Pin, PWM
+import time, utime
+import network
 import json
 
 # Wi-Fi and ThingsBoard configuration
@@ -81,6 +83,11 @@ def connect_mqtt():
     print("Connected to ThingsBoard MQTT and subscribed to RPC requests")
 
 # Main loop
+showBmp(tft,'./LCD/scu.bmp',(37,20))
+time.sleep(5)
+tft.fill(TFT.GREEN)
+wr.text((60,20),"SCU",TFT.WHITE,font12)
+wr.text((45,32),"IOT Lab",TFT.WHITE,font12)
 def main():
     connect_wifi()
     connect_mqtt()
