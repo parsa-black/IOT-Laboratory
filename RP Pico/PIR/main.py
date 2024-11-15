@@ -1,10 +1,5 @@
 from machine import Pin
-<<<<<<< HEAD
 import utime
-# Objects
-led = Pin(28, Pin.OUT)
-pir = Pin(16, Pin.IN, Pin.PULL_UP)
-=======
 from umqtt.simple import MQTTClient
 import utime
 import network
@@ -59,10 +54,6 @@ data = dict()
 led.low()
 utime.sleep(3)
 while True:
-   print(pir.value())
-   if pir.value() == 1:
-       print("Movement")
-       led.high()
        sensor = pir.value()
        print(pir.value())
        data["Motion"] = sensor
