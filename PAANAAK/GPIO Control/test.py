@@ -25,7 +25,7 @@ pwm.duty_ns(MID)
 
 
 # GPIO setup
-gpio_state = {23: False}  # Track GPIO state for pin 2
+gpio_state = {23: False}  # Track GPIO state for pin 23
 gpio_pin = 23
 gpio_control = Pin(gpio_pin, Pin.OUT)
 gpio_control.value(0)  # Set GPIO to LOW initially
