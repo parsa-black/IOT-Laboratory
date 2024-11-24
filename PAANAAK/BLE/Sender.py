@@ -44,6 +44,7 @@ class BLETemperature:
     def _irq(self, event, data):
         # Track connections so we can send notifications.
         if event == _IRQ_CENTRAL_CONNECT:
+            print("Connected")
             conn_handle, _, _ = data
             self._connections.add(conn_handle)
         elif event == _IRQ_CENTRAL_DISCONNECT:
@@ -63,6 +64,7 @@ class BLETemperature:
                 if notify:
                     # Notify connected centrals.
                     self._ble.gatts_notify(conn_handle, self._handle)
+                    print(temp_deg_c)
                 if indicate:
                     # Indicate connected centrals.
                     self._ble.gatts_indicate(conn_handle, self._handle)
@@ -89,3 +91,4 @@ def demo():
 
 if __name__ == "__main__":
     demo()
+

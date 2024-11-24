@@ -4,7 +4,7 @@ import struct
 import time
 import micropython
 
-from ble_advertising import decode_services, decode_name
+from BLE.ble_advertising import decode_services, decode_name
 
 from micropython import const
 
