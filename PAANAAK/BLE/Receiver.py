@@ -108,7 +108,7 @@ class BLETemperatureCentral:
 
     def on_notify(self, callback):
         self._notify_callback = callback
-    '''
+    
     def _decode_name(self, payload):
         i = 0
         while i + 1 < len(payload):
@@ -130,7 +130,7 @@ class BLETemperatureCentral:
                     services.append(bluetooth.UUID(struct.unpack("<H", payload[i + j : i + j + 2])[0]))
             i += 1 + length
         return services
-    '''
+    
     def _parse_temperature(self, data):
         return struct.unpack("<h", data)[0] / 100
 
